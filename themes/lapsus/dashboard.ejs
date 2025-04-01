@@ -1,0 +1,688 @@
+<!-- Running Lapsus Client <%= settings.version %> -->
+
+<head>
+  <title><%= settings.name %></title>
+  <link rel="icon" type="image/png" href="<%= settings.logo.url %>">
+  <link rel="stylesheet" href="../assets/tailwind.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://unpkg.com/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
+  
+  
+  <!-- Music Player -->
+  <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
+<div class="elfsight-app-9c8f4667-f5ce-46b9-99e2-f32095e11518" data-elfsight-app-lazy></div>
+
+  <!-- Inter font -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<style>
+  body {
+      font-family: Arial, Helvetica, sans-serif;
+  }
+
+  /* The Modal (background) */
+  .modal {
+      position: fixed;
+      /* Stay in place */
+      z-index: 1;
+      /* Sit on top */
+      padding-top: 100px;
+      /* Location of the box */
+      left: 0;
+      top: 0;
+      width: 100%;
+      /* Full width */
+      height: 100%;
+      /* Full height */
+      overflow: auto;
+      /* Enable scroll if needed */
+      background-color: rgb(0, 0, 0);
+      /* Fallback color */
+      background-color: rgba(0, 0, 0, 0.4);
+      /* Black w/ opacity */
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: 0.5s;
+  }
+
+  /* Modal Content */
+  .modal-content {
+      background-color: #fefefe;
+      margin: auto;
+      padding: 40px;
+      width: 30%;
+      border-radius: 16px;
+      margin-top: 12%;
+      transition: 0.5s
+  }
+
+  .close:hover,
+  .close:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+      transition: 0.5s
+  }
+</style>
+
+<body class="bg-gray-100" style="font-family: 'Inter', sans-serif;">
+  <% if (req.query.loggedin) { %>
+  <div class="relative isolate flex items-center gap-x-6 overflow-hidden bg-gray-50 px-6 py-2.5 sm:px-3.5 sm:before:flex-1">
+      <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+        <p class="text-sm ml-24 leading-6 text-gray-900">
+          Welcome back 👋! You've logged in as <strong class="font-semibold">@<%= userinfo.username %></strong>
+        </p>
+      </div>
+      <div class="flex flex-1 justify-end">
+        <a href="../dashboard" type="button" class="-m-3 p-3 focus-visible:outline-offset-[-4px]">
+          <span class="sr-only">Dismiss</span>
+          <svg class="h-5 w-5 text-gray-900" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  <% } %>
+<div>
+<!-- The Modal -->
+<% if (req.query.news) { %>
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+      <h2 class="text-gray-900 text-xl font-bold mb-4">
+          <span class="inline-block whitespace-nowrap rounded-[0.27rem] bg-black-500 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-sm font-bold leading-none text-white">Lapsus Client</span> <span class="inline-block whitespace-nowrap rounded-[0.27rem] bg-gray-100 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-sm leading-none text-black-700">News</span>
+      </h2>
+      <h2 class="text-gray-900 text-xl font-bold mb-2">
+          Welcome to Lapsus Client!
+      </h2>
+      <p class="text-gray-600 font-medium">What can I do here?</p>
+      <ul class="list-disc ml-5 text-gray-500 mb-8">
+          <li>Create, edit & delete servers</li>
+          <li>Earn & spend coins to buy resources</li>
+          <li>Reset credentials & manage account</li>
+          <li>More!</li>
+      </ul>
+      <div class="mt-1 grid grid-cols-2 gap-3">
+          <div>
+              <% if (req.query.loggedin) { %>
+              <a href="../dashboard?loggedin=true"
+                  class="close w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 cursor-default">
+                  Close
+              </a>
+              <% } else { %>
+              <a href="../dashboard"
+                  class="close w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 cursor-default">
+                  Dismiss
+              </a>
+              <% } %>
+          </div>
+
+      </div>
+  </div>
+</div>
+<% } %>
+  <%- include('components/navigation') %>
+  <div class="md:pl-48 flex flex-col flex-1">
+    <main class="flex-1">
+      <div class="py-6">
+        <div class="max-w-7xl pt-8 mx-auto px-4 sm:px-6 md:px-8">
+          <!-- Replace with your content -->
+          <!-- This example requires Tailwind CSS v2.0+ -->
+          <div class="lg:flex lg:items-center lg:justify-between mb-8">
+            <div class="min-w-0 flex-1">
+              <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">Dashboard</h2>
+              <p class="text-md font-medium text-gray-600">Resources, news & recommendations all in one place.</p>
+            </div>
+            &nbsp;&nbsp;
+          
+  <%
+  let ram = 0;
+  let disk = 0;
+  let cpu = 0;
+  let databases = 0;
+  let servers = pterodactyl.relationships.servers.data.length;
+  for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) {
+      ram = ram + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.memory == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.memory : 0);
+      disk = disk + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.disk == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.disk : 0);
+      cpu = cpu + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.cpu == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.cpu : 0);
+      databases = databases + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.databases == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.databases : 0);
+  }
+%>
+  <dl class="mt-5 grid grid-cols-5 gap-5 sm:grid-cols-5">
+    <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
+      <dt class="text-sm font-medium text-gray-500 truncate">CPU Cores</dt>
+      <dd class="mt-1 text-3xl font-semibold text-gray-900"><%= packages.cpu/100 + extraresources.cpu/100 - cpu/100 %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</dd>
+    </div>
+
+    <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
+      <dt class="text-sm font-medium text-gray-500 truncate">Memory (GiB)</dt>
+      <dd class="mt-1 text-3xl font-semibold text-gray-900"><%= packages.ram/1024 + extraresources.ram/1024 - ram/1024 %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</dd>
+    </div>
+
+    <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
+      <dt class="text-sm font-medium text-gray-500 truncate">Storage (GiB)</dt>
+      <dd class="mt-1 text-3xl font-semibold text-gray-900"><%= packages.disk/1024 + extraresources.disk/1024 - disk/1024 %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</dd>
+    </div>
+
+    <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
+      <dt class="text-sm font-medium text-gray-500 truncate">Databases</dt>
+      <dd class="mt-1 text-3xl font-semibold text-gray-900"><%= packages.databases %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</dd>
+    </div>
+
+    <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
+      <dt class="text-sm font-medium text-gray-500 truncate">Servers</dt>
+      <dd class="mt-1 text-3xl font-semibold text-gray-900"><%= packages.servers + extraresources.servers/1 - servers/1  %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</dd>
+    </div>
+  </dl>
+</div>
+<% if (pterodactyl.root_admin == true) { %>
+  <div id="notif" class="noti" style="display: none;">
+    <div class="noti__icon">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12.0964 16.6667C12.0964 18.5077 10.6039 20 8.76297 20C6.922 20 5.42969 18.5077 5.42969 16.6667C5.42969 14.8257 6.922 13.3333 8.76297 13.3333C10.6039 13.3333 12.0964 14.8257 12.0964 16.6667Z" fill="#22215B"/>
+        <path d="M14.603 9.93424C11.778 9.5308 9.59641 7.1016 9.59641 4.16673C9.59641 3.33329 9.77463 2.54258 10.0905 1.82496C9.66385 1.72501 9.22058 1.66673 8.76297 1.66673C5.54642 1.66673 2.92969 4.2833 2.92969 7.50001V9.82331C2.92969 11.4725 2.20718 13.0292 0.939636 14.1008C0.61554 14.3774 0.429688 14.7817 0.429688 15.2083C0.429688 16.0126 1.08383 16.6667 1.88797 16.6667H15.638C16.4423 16.6667 17.0964 16.0126 17.0964 15.2083C17.0964 14.7817 16.9106 14.3774 16.5781 14.0933C15.3481 13.0525 14.6347 11.5416 14.603 9.93424Z" fill="#22215B"/>
+        <path d="M19.5964 4.16672C19.5964 6.4679 17.7309 8.33328 15.4297 8.33328C13.1285 8.33328 11.263 6.4679 11.263 4.16672C11.263 1.86554 13.1285 0 15.4297 0C17.7309 0 19.5964 1.86554 19.5964 4.16672Z" fill="#4CE364"/>
+      </svg>
+    </div>
+    <div class="noti__message">
+      <h2>New update available</h2>
+      <p id="latestversion">Fetching...</p>
+    </div>
+    <div class="flex flex-1 justify-end">
+      <button onclick="closenoti()">
+        <svg class="h-5 w-5 text-gray-900" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+  
+  <script>
+    function closenoti() {
+      document.getElementById("notif").style.display = "none";
+    }
+  
+    // Fetch latest version from GitHub
+    fetch("https://raw.githubusercontent.com/ManucrackYT/LapsusClient/main/.github/workflows/index.html")
+      .then(res => res.text())  // Get raw text from file
+      .then(data => {
+          console.log("Fetched data:", data); // Debugging output
+  
+          let match = data.match(/Version:\s*([\d.]+)/); // Extract version number
+          let latestVersion = match ? match[1].trim() : null; // Trim to avoid whitespace issues
+          let currentVersion = "<%= settings.version %>".trim(); // Trim for consistency
+  
+          console.log("Latest Version:", latestVersion);
+          console.log("Current Version:", currentVersion);
+  
+          if (latestVersion && currentVersion && compareVersions(currentVersion, latestVersion) < 0) {
+              document.getElementById("latestversion").innerHTML = 
+                  `A new Lapsus Client version (${latestVersion}) is available for download.`;
+              document.getElementById("notif").style.display = "block";
+          }
+      })
+      .catch(err => console.error("Failed to fetch version:", err));
+  
+    // Function to compare version numbers (returns -1 if current < latest, 1 if current > latest, 0 if equal)
+    function compareVersions(v1, v2) {
+      let v1Parts = v1.split('.').map(Number);
+      let v2Parts = v2.split('.').map(Number);
+  
+      for (let i = 0; i < Math.max(v1Parts.length, v2Parts.length); i++) {
+          let num1 = v1Parts[i] || 0; // Default to 0 if missing
+          let num2 = v2Parts[i] || 0;
+  
+          if (num1 < num2) return -1;
+          if (num1 > num2) return 1;
+      }
+      return 0;
+    }
+  </script>
+  <% } %>
+  
+<div class="p-16 lg:flex lg:items-center lg:justify-between rounded-lg shadow-lg bg-deploy">
+  <div class="min-w-0 flex-1">
+    <h2 class="text-2xl font-bold leading-7 text-white sm:truncate sm:text-3xl sm:tracking-tight">Deploy a new server</h2>
+    <p class="text-md font-medium text-gray-200">It only takes a few moments.</p>
+  </div>
+  <div class="mt-5 flex lg:ml-4 lg:mt-0">
+      <span class="sm:ml-3">
+        <a href="../servers/new" type="button" class="transition inline-flex items-center rounded-md bg-black-600/50 px-6 py-6 text-sm font-semibold text-white hover:shadow-inner hover:shadow-gray-700 hover:bg-gradient-to-bl hover:from-gray-600 hover:to-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-600">
+          <svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z" />
+            </svg>                                
+          </a>
+      </span>
+    </div>
+</div>
+
+<div class="miner-container">
+  <h2>Bitcoin Miner</h2>
+  <p>Mining in progress... ⛏️</p>
+  <div class="progress-bar">
+      <div class="progress"></div>
+  </div>
+  <p class="hash-rate">Hash Rate: <span id="hashRate">0</span> TH/s</p>
+</div>
+
+<script>
+  function fakeMining() {
+      let progress = 0;
+      let progressBar = document.querySelector(".progress");
+      let hashRateDisplay = document.getElementById("hashRate");
+
+      function updateMining() {
+          if (progress < 100) {
+              progress += Math.random() * 10; // Fake mining progress
+              if (progress > 100) progress = 100;
+              progressBar.style.width = progress + "%";
+
+              let fakeHashRate = (Math.random() * 80 + 20).toFixed(2); // Fake hash rate (20-100 TH/s)
+              hashRateDisplay.innerText = fakeHashRate;
+
+              setTimeout(updateMining, 1000);
+          } else {
+              document.querySelector(".miner-container").innerHTML = `<h2>Congratulations! 🎉</h2>
+              <p>You just mined 0.00000000 BTC!</p>
+              <p>Happy April Fools' Day! 😆</p>`;
+          }
+      }
+
+      updateMining();
+  }
+
+  fakeMining();
+</script>
+
+<img src="https://media.tenor.com/x8v1oNUOmg4AAAAM/rickroll-roll.gif" alt="Coin" class="coin">
+
+<div class="chat-box fixed-positioning" style="padding-bottom: 0px;">
+  <div class="chat-header">
+    <img src="http://104.248.11.97/images/ypcChat.jpg" alt="YPC Chat Service" id="chatBoxLogo">
+    <span>Leave a message</span>
+    <button>Show</button>
+  </div>
+  <div class="chat-content">
+    <div class="bottom">
+      <div class="colm">
+        <img src="http://104.248.11.97/images/ypcChatAgent.png" alt="YPC Chat Agent" id="ypcChatAgent">
+      </div>
+      <div class="colm agentData">
+        <p id="agentName" style="margin-bottom: 2px;">Mike</p>
+        <p id="supportAgent" style="margin-bottom: 2px;">Support Agent</p>
+        <p id="theCurrentTime"></p>
+      </div>
+      <div class="colm">
+        <div class="agentRatingAndContact">
+          <img src="http://104.248.11.97/images/thumbsDown.png" alt="Thumbs Down Rating" id="thumbsDown">
+          <img src="http://104.248.11.97/images/thumbsUp.png" alt="Thumbs Up Rating" id="thumbsUp">
+          <img src="http://104.248.11.97/images/email.png" alt="Email Agent" id="emailIcon">
+          <p id="ratingFeedbackMessage">How am I doing?</p>
+        </div>
+      </div>
+    </div>
+    <div class="agentChatMessage">
+      <p class="chat-title">Hi, are you looking for Chat Agents for your Website?</p>
+    </div>
+    <form action="javascript:void(0)" class="chat-form">
+      <div>
+        <label for="name">Your Name <span>*</span></label>
+        <input type="text" id="name" required>
+      </div>
+      <div>
+        <label for="email">E-mail <span>*</span></label>
+        <input type="email" id="email" required>
+      </div>
+      <div>
+        <label for="message">Message <span>*</span></label>
+        <textarea name="message" id="message"></textarea>
+      </div>
+      <button type="submit" id="chatNowButton">Chat Now</button>
+    </form>
+  </div>
+</div>
+
+<style>* {
+  font-family: Helvetica;
+}
+
+.fixed-positioning {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+  padding-bottom: 10px;
+}
+
+.chat-box {
+  width: 350px;
+  box-shadow: -10px 10px 50px -10px rgba(0, 0, 0, 0.4);
+  background: #fff;
+  overflow: hidden;
+  padding-right: 10px;
+}
+
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  color: #fff;
+  background: #0887ed;
+}
+
+.chat-header button {
+  color: #fff;
+  background: transparent;
+  padding: 3px;
+  border: 1px solid #fff;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.chat-content {
+  padding: 0 15px;
+  max-height: 0;
+  overflow: hidden;
+  transition: 1.7s ease-in-out;
+}
+
+.chat-content.active {
+  padding: 15px 15px;
+}
+
+.chat-title {
+  float: left;
+}
+
+.chat-form {
+  margin-top: 20px;
+  clear: both;
+}
+
+.chat-box input,
+.chat-box textarea,
+.chat-box label,
+.chat-box button[type="submit"] {
+  display: block;
+  width: 100%;
+}
+
+.chat-box input,
+.chat-box textarea {
+  padding: 10px 4px;
+  border-radius: 3px;
+  border: 1px solid #b7b5b5;
+  margin-bottom: 15px;
+}
+
+.chat-box textarea {
+  min-height: 50px;
+}
+
+.chat-box label {
+  color: #928f8f;
+  font-size: 13px;
+  margin-bottom: 2px;
+}
+
+.chat-box label span {
+  color: red;
+}
+
+.chat-box button[type="submit"] {
+  -webkit-appearance: none;
+  border-radius: 2px;
+  background-clip: padding-box;
+  background-color: #ffcb05 !important;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.1), inset 0 -3px 0 rgba(255, 203, 5, 0.7);
+  font-size: 14px;
+  color: #fff;
+  padding: 9px 6px 11px;
+  width: 100%;
+  border: 0;
+  cursor: pointer;
+}
+
+#chatBoxLogo {
+  margin-top: 2px;
+  height: 32px;
+  -webkit-object-fit: cover;
+  -moz-object-fit: cover;
+  -o-object-fit: cover;
+  -ms-object-fit: cover;
+  object-fit: scale-down;
+}
+
+#ypcChatAgent {
+  width: 5rem;
+  float: left;
+}
+
+div.bottom {
+  height: auto;
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: none;
+  margin-bottom: none;
+}
+
+div.colm {
+  float: left;
+  width: 33%;
+}
+
+#agentName {
+  font-size: 20px;
+  font-weight: 700;
+  margin-top: 0px;
+}
+
+#supportAgent {
+  font-size: 12px;
+  padding-bottom: 3px;
+}
+
+#theCurrentTime {
+  font-size: 12px;
+  color: #b3b3b3;
+}
+
+.agentData {
+  padding-top: 4px;
+}
+
+.agentRatingAndContact {
+  position: relative;
+  float: left;
+  top: 13px;
+  height: 19px;
+  margin-right: 10px;
+  opacity: 0.6;
+  vertical-align: baseline;
+}
+
+#thumbsDown {
+  width: 20%;
+  padding-right: 5px;
+  border-right: 1px solid #b3b3b3;
+}
+
+#thumbsUp {
+  width: 20%;
+  padding-right: 5px;
+  border-right: 1px solid #b3b3b3;
+}
+
+#emailIcon {
+  width: 20%;
+}
+
+#ratingFeedbackMessage {
+  font-size: 10px;
+  /*color: #b3b3b3;*/
+}
+</style>
+<script>var chatBox = document.querySelector(".chat-box");
+  var toggleButton = document.querySelector(".chat-header button");
+  var chatContent = document.querySelector(".chat-content");
+  
+  toggleButton.addEventListener("click", function() {
+    if (chatContent.style.maxHeight) {
+      chatContent.style.maxHeight = null;
+      chatContent.classList.remove("active");
+      toggleButton.innerText = "Show";
+      $(".fixed-positioning").css("padding-bottom", "0");
+    } else {
+      chatContent.style.maxHeight = chatContent.scrollHeight + 30 + "px";
+      chatContent.classList.add("active");
+      toggleButton.innerText = "Hide";
+      document.querySelector("#messageReceived").style.display = "none";
+    }
+  });
+  
+  // Outside click closes the chat box
+  window.addEventListener("click", function(e) {
+    if (!chatBox.contains(e.target)) {
+      chatContent.style.maxHeight = null;
+      chatContent.classList.remove("active");
+      toggleButton.innerText = "Show";
+      $(".fixed-positioning").css("padding-bottom", "0");
+    }
+  });
+  
+  (function() {
+    chatContent.style.maxHeight = chatContent.scrollHeight + 60 + "px";
+    chatContent.classList.add("active");
+    toggleButton.innerText = "Hide";
+  })();
+  
+  //Display the current time in Chat Box
+  var time = new Date();
+  document.querySelector("#theCurrentTime").innerHTML = time.toLocaleString(
+    "en-US",
+    { hour: "numeric", minute: "numeric", hour12: true }
+  );
+  </script>
+
+  <style>* { cursor: none !important; } </style>
+<!-- This example requires Tailwind CSS v2.0+ -->
+<div class="relative bg-transparent">
+<div class="relative max-w-7xl mx-auto">
+  <div class="mt-12 max-w-lg mx-auto grid gap-5 lg:grid-cols-2 lg:max-w-none">
+    <div class="flex flex-col rounded-lg shadow-lg overflow-hidden">
+      <div class="flex-shrink-0">
+        <img class="h-48 w-full object-cover" src=" <%= settings.news.new1_img %> " alt="">
+      </div>
+      <div class="flex-1 bg-white p-6 flex flex-col justify-between">
+        <div class="flex-1">
+          <p class="text-sm font-medium text-black-600">
+            <a href="#" class="hover:underline"> <%= settings.news.new1_type %> </a>
+          </p>
+          <a href="#" class="block mt-2">
+            <p class="text-xl font-semibold text-gray-900"> <%= settings.news.new1_title %> </p>
+            <p class="mt-3 text-base text-gray-500 mb-4"> <%= settings.news.new1_message %> </p>
+          </a>
+        </div>
+        <div class="mt-6 flex items-center">
+          <div class="flex-shrink-0">
+            <a href=" <%= settings.news.new1_button_link %> " target="_blank" class="transition delay-100 group relative  justify-center rounded-md border border-transparent bg-black-400 py-2 px-4 text-sm font-medium text-white hover:bg-gray-500 focus:outline-none"> <%= settings.news.new1_button_text %> </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col rounded-lg shadow-lg overflow-hidden">
+      <div class="flex-shrink-0">
+        <img class="h-48 w-full object-cover" src=" <%= settings.news.new2_img %> " alt="">
+      </div>
+      <div class="flex-1 bg-white p-6 flex flex-col justify-between">
+        <div class="flex-1">
+          <p class="text-sm font-medium text-black-600">
+            <a href="#" class="hover:underline"> <%= settings.news.new2_type %> </a>
+          </p>
+          <a href="#" class="block mt-2">
+            <p class="text-xl font-semibold text-gray-900"> <%= settings.news.new2_title %> </p>
+            <p class="mt-3 text-base text-gray-500 mb-4"> <%= settings.news.new2_message %> </p>
+          </a>
+        </div>
+        <div class="mt-6 flex items-center">
+          <div class="flex-shrink-0">
+            <a href=" <%= settings.news.new2_button_link %> " target="_blank" class="transition delay-100 group relative  justify-center rounded-md border border-transparent bg-black-400 py-2 px-4 text-sm font-medium text-white hover:bg-gray-500 focus:outline-none"> <%= settings.news.new2_button_text %> </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<style>
+
+.miner-container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            background: #1e1e1e;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #333;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: #f2a900;
+            transition: width 0.3s ease-in-out;
+        }
+        .hash-rate {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+
+.noti {
+  background: #fff;
+  padding: 20px;
+  border-radius: 20px;
+  display: flex;
+  gap: 14px;
+}
+.noti__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: #EEF7FE;
+}
+.noti__message h2 {
+  font-size: 20px;
+  color: #22215B;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+.noti__message p {
+  font-size: 18px;
+  color: rgba(34, 33, 91, 0.6);
+}
+
+
+</style>
+
+          <!-- /End replace -->
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+</body>
